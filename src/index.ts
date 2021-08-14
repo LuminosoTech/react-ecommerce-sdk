@@ -16,3 +16,4 @@
  */
 export { initialize } from "./client";
 export * from "./hooks";
+export * from "./models/billing";

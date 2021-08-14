@@ -1,14 +1,10 @@
-import { useContext, useEffect } from "react";
-import { context } from "../store";
+import { useSelector } from "react-redux";
+
+import { RootState } from "../store/reducers";
+import { CoreState } from "../store/reducers/core/coreReducer";
 
 export const useLuminoso = () => {
-  const { instance } = useContext(context);
+  const { ecommerceInstance } = useSelector<RootState, CoreState>((state) => state.core);
 
-  useEffect(() => {
-    if (instance) {
-      console.log(instance);
-    }
-  }, [instance]);
-
-  return [instance];
+  return [ecommerceInstance];
 };

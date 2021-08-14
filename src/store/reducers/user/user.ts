@@ -1,18 +1,18 @@
-import { Action } from "../../models/store/Action";
-import { update } from "../../utils/redux";
-import { SET_USER } from "../types/user";
+import { Action } from "../../../models/store/Action";
+import { update } from "../../../utils/redux";
+import { SET_USER } from "../../types/user";
 
 export interface UserState {
   error?: any;
   isPostingUser?: boolean;
 }
 
-export const userInitialState: UserState = {
+const initialState: UserState = {
   error: undefined,
   isPostingUser: false,
 };
 
-const userReducer = (state: UserState, action: Action): UserState => {
+const userReducer = (state = initialState, action: Action): UserState => {
   switch (action.type) {
     case SET_USER.REQUEST:
       return update(state, {

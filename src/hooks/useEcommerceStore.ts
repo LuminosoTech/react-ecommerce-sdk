@@ -1,12 +1,15 @@
-import { useContext, useEffect } from "react";
-import { context } from "../store";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+
+import { RootState } from "../store/reducers";
+import { CoreState } from "../store/reducers/core/coreReducer";
 
 export const useEcommerceStore = () => {
-  const { instance } = useContext(context);
+  const { ecommerceInstance } = useSelector<RootState, CoreState>((state) => state.core);
 
   useEffect(() => {
-    if (instance) {
-      console.log(instance);
+    if (ecommerceInstance) {
+      console.log(ecommerceInstance);
     }
-  }, [instance]);
+  }, [ecommerceInstance]);
 };
