@@ -4,14 +4,15 @@ import {
   ShippingAccount,
   CustomerAddress,
   ClientPaymentToken,
+  ShippingRate,
 } from "@luminoso/ecommerce-sdk";
 import { BillingClient, PaymentMethod } from "../../models/billing";
 
 export class CheckoutService {
-  private billingClient: BillingClient;
+  private billingClient?: BillingClient;
   private sdkCheckoutService: SdkCheckoutService;
 
-  constructor(billingClient: BillingClient, sdkCheckoutService: SdkCheckoutService) {
+  constructor(sdkCheckoutService: SdkCheckoutService, billingClient?: BillingClient) {
     this.billingClient = billingClient;
     this.sdkCheckoutService = sdkCheckoutService;
   }
@@ -24,6 +25,14 @@ export class CheckoutService {
     this.sdkCheckoutService.getAddressAutocomplete(address);
   };
 
+  public getShippingRates = (): Promise<ShippingRate[]> => {
+    return this.sdkCheckoutService.getShippingRates();
+  };
+
+  public postSelectedShippingRate = (rateId: string): Promise<void> => {
+    return this.sdkCheckoutService.postSelectedShippingRate(rateId);
+  };
+
   public postCustomerAddress = (body: Partial<CustomerAddress>) => {
     this.sdkCheckoutService.postCustomerAddress(body);
   };
@@ -33,10 +42,14 @@ export class CheckoutService {
   };
 
   public postPaymentMethod = async (data: PaymentMethod): Promise<string> => {
-    const nonce = await this.billingClient.addPaymentMethod(data);
+    if (this.billingClient) {
+      const nonce = await this.billingClient?.addPaymentMethod(data);
 
-    await this.sdkCheckoutService.postPaymentMethod(nonce);
+      await this.sdkCheckoutService.postPaymentMethod(nonce);
 
-    return "done";
+      return "done";
+    }
+
+    return "billintClientNotInitialized";
   };
 }

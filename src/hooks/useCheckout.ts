@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { BillingClient } from "../models/billing";
 import { CheckoutService } from "../services/billing/CheckoutService";
 import { BraintreeBillingClient } from "../services/client/BraintreeBillingClient";
 import { RootState } from "../store/reducers";
@@ -9,15 +11,23 @@ export const useCheckout = () => {
   const { ecommerceInstance } = useSelector<RootState, CoreState>((state) => state.core);
   const { billingClient } = useSelector<RootState, CheckoutState>((state) => state.checkout);
 
-  const sdkCheckoutService = ecommerceInstance?.checkoutService();
+  const [checkoutServiceState, setCheckoutServiceState] = useState<CheckoutService>();
 
-  if (billingClient && sdkCheckoutService) {
-    const braintreeBillingClient = new BraintreeBillingClient(billingClient);
+  useEffect(() => {
+    const sdkCheckoutService = ecommerceInstance?.checkoutService();
 
-    const checkoutService = new CheckoutService(braintreeBillingClient, sdkCheckoutService);
+    if (sdkCheckoutService) {
+      let braintreeBillingClient: BillingClient | undefined = undefined;
 
-    return checkoutService;
-  }
+      if (billingClient) {
+        braintreeBillingClient = new BraintreeBillingClient(billingClient);
+      }
 
-  return undefined;
+      const checkoutService = new CheckoutService(sdkCheckoutService, braintreeBillingClient);
+
+      setCheckoutServiceState(checkoutService);
+    }
+  }, [ecommerceInstance]);
+
+  return checkoutServiceState;
 };

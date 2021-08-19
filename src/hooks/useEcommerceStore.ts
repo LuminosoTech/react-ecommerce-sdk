@@ -9,7 +9,7 @@ export const useEcommerceStore = () => {
 
   useEffect(() => {
     if (ecommerceInstance) {
-      console.log(ecommerceInstance);
+      // console.log(ecommerceInstance);
     }
   }, [ecommerceInstance]);
 };

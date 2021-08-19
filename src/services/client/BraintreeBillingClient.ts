@@ -35,8 +35,6 @@ export class BraintreeBillingClient implements BillingClient {
             reject(new Error(requestErr.message));
           }
 
-          console.log("SUCCESS", response);
-
           resolve(response.creditCards[0].nonce);
         }
       );
