@@ -1,7 +1,7 @@
 {
   "name": "@luminoso/react-ecommerce-sdk",
-  "version": "0.0.1",
-  "description": "React SDK for Luminoso ecommerce",
+  "version": "0.0.3",
+  "description": "React sdk to easily integrate with Luminoso's ecommerce api",
   "license": "Apache-2.0",
   "module": "dist/react-ecommerce-sdk.es.js",
   "typings": "types/index.d.ts",
@@ -34,12 +34,17 @@
     "url": "git+https://github.com/LuminosoTech/react-secommerce-dk.git"
   },
   "author": "Fabrizio Rodin-Miron",
+  "keywords": [
+    "luminoso",
+    "ecommerce",
+    "react"
+  ],
   "bugs": {
     "url": "https://github.com/LuminosoTech/react-ecommerce-sdk/issues"
   },
   "homepage": "https://github.com/LuminosoTech/react-ecommerce-sdk#readme",
   "dependencies": {
-    "@luminoso/ecommerce-sdk": "^0.0.2",
+    "@luminoso/ecommerce-sdk": "^0.0.3",
     "@types/braintree-web": "^3.75.6",
     "braintree-web": "^3.80.0",
     "esbuild": "^0.12.6",
