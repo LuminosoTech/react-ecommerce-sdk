@@ -17,7 +17,7 @@
 
 import dts from "rollup-plugin-dts";
 import esbuild from "rollup-plugin-esbuild";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 import { dependencies } from "./package.json";
 
@@ -37,14 +37,14 @@ const esPluginOptions = {
   jsx: "transform",
 };
 
-const cjsPlugins = [esbuild({ ...esPluginOptions, minify: true })];
+const plugins = [esbuild({ ...esPluginOptions, minify: process.env.NODE_ENV === "production" }), commonjs()];
 
 if (process.env.NODE_ENV === "production") {
-  cjsPlugins.push(uglify());
+  plugins.push(uglify());
 }
 
 const cjsBundleFor = (platform) => ({
-  plugins: cjsPlugins,
+  plugins,
   external: ["https", "http", "url"].concat(Object.keys(dependencies || {})),
   input: `src/index.ts`,
   output: {
@@ -66,14 +66,8 @@ const esmBundle = {
   ],
 };
 
-const umdPlugins = [esbuild({ ...esPluginOptions, minify: process.env.NODE_ENV === "production" })];
-
-if (process.env.NODE_ENV === "production") {
-  umdPlugins.push(uglify());
-}
-
 const umdBundle = {
-  plugins: umdPlugins,
+  plugins,
   input: "src/index.ts",
   output: [
     {
@@ -85,14 +79,8 @@ const umdBundle = {
   ],
 };
 
-const systemPlugins = [esbuild({ ...esPluginOptions, minify: process.env.NODE_ENV === "production" })];
-
-if (process.env.NODE_ENV === "production") {
-  systemPlugins.push(uglify());
-}
-
 const systemBundle = {
-  plugins: systemPlugins,
+  plugins,
   input: "src/index.ts",
   output: [
     {
