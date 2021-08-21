@@ -1,12 +1,12 @@
 {
   "name": "@luminoso/react-ecommerce-sdk",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React sdk to easily integrate with Luminoso's ecommerce api",
   "license": "Apache-2.0",
   "module": "dist/react-ecommerce-sdk.es.js",
   "typings": "types/index.d.ts",
-  "main": "dist/react-ecommerce-sdk.js",
-  "browser": "dist/react-ecommerce-sdk.js",
+  "main": "dist/react-ecommerce-sdk.browser.js",
+  "browser": "dist/react-ecommerce-sdk.browser.js",
   "directories": {
     "lib": "lib"
   },

@@ -50,7 +50,7 @@ const cjsBundleFor = (platform) => ({
   output: {
     exports: "named",
     format: "cjs",
-    file: `dist/${packageName}.min.js`,
+    file: `dist/${packageName}.${platform}.js`,
     sourcemap: false,
   },
 });
