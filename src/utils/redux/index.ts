@@ -13,6 +13,15 @@ export const createAction = (type: string, payload?: any): Action => {
   return { type };
 };
 
+export const combineReducers = (slices: any) => (prevState: any, action: any) =>
+  Object.keys(slices).reduce(
+    (nextState, nextProp) => ({
+      ...nextState,
+      [nextProp]: slices[nextProp](prevState[nextProp], action),
+    }),
+    prevState
+  );
+
 export const update = <T>(state: T, payload: any): T => {
   return {
     ...state,

@@ -10,13 +10,13 @@ export interface CheckoutState {
   isPostingPaymentMethod: boolean;
 }
 
-const initialState: CheckoutState = {
+export const checkoutInitialState: CheckoutState = {
   isFetchingBillingClient: false,
   billingClient: undefined,
   isPostingPaymentMethod: false,
 };
 
-const checkoutReducer = (state = initialState, action: Action): CheckoutState => {
+const checkoutReducer = (state: CheckoutState, action: Action): CheckoutState => {
   switch (action.type) {
     case SET_BILLING_CLIENT.REQUEST:
       return update(state, {

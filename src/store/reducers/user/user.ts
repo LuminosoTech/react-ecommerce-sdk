@@ -7,12 +7,12 @@ export interface UserState {
   isPostingUser?: boolean;
 }
 
-const initialState: UserState = {
+export const userInitialState: UserState = {
   error: undefined,
   isPostingUser: false,
 };
 
-const userReducer = (state = initialState, action: Action): UserState => {
+const userReducer = (state: UserState, action: Action): UserState => {
   switch (action.type) {
     case SET_USER.REQUEST:
       return update(state, {

@@ -1,7 +1,5 @@
-import { createInstance, User } from "@luminoso/ecommerce-sdk";
-import React, { PropsWithChildren, useEffect, useMemo } from "react";
-import { Provider, useDispatch } from "react-redux";
-import { store } from "../store";
+import React, { PropsWithChildren, useContext, useEffect, useMemo } from "react";
+import { context, ContextProvicer } from "../store";
 import { initializeActions } from "../store/actions/init/initializationActions";
 
 interface InitializeProps {}
@@ -13,11 +11,13 @@ interface LuminosoContainerProps {
 const InitContainer = (props: PropsWithChildren<LuminosoContainerProps>) => {
   const { sdkKey } = props;
 
-  const dispatch = useDispatch();
+  const { dispatch } = useContext(context);
 
   useEffect(() => {
-    initializeActions(sdkKey)(dispatch);
-  }, []);
+    if (dispatch) {
+      initializeActions(sdkKey)(dispatch);
+    }
+  }, [dispatch]);
 
   return <>{props.children}</>;
 };
@@ -25,9 +25,9 @@ const InitContainer = (props: PropsWithChildren<LuminosoContainerProps>) => {
 export const initialize = (sdkKey: string) => (props: React.PropsWithChildren<InitializeProps>) => {
   return useMemo(
     () => (
-      <Provider store={store}>
-        <InitContainer sdkKey={sdkKey}> {props.children}</InitContainer>
-      </Provider>
+      <ContextProvicer>
+        <InitContainer sdkKey={sdkKey}>{props.children}</InitContainer>
+      </ContextProvicer>
     ),
     []
   );

@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
-
-import { RootState } from "../store/reducers";
-import { CoreState } from "../store/reducers/core/coreReducer";
+import { useContext, useEffect, useReducer, useState } from "react";
+import { EcommerceInstance } from "@luminoso/ecommerce-sdk";
+import { context } from "../store";
+import { initialRootState } from "../store/reducers";
 
 export const useLuminoso = () => {
-  const { ecommerceInstance } = useSelector<RootState, CoreState>((state) => state.core);
+  const { state } = useContext(context);
 
-  return [ecommerceInstance];
+  const { ecommerceInstance } = state.core;
+
+  return ecommerceInstance;
 };

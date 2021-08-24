@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useEffect, useState } from "react";
 import { CartService } from "@luminoso/ecommerce-sdk";
 
-import { RootState } from "../store/reducers";
-import { CoreState } from "../store/reducers/core/coreReducer";
+import { context } from "../store";
 
 export const useCart = () => {
-  const { ecommerceInstance } = useSelector<RootState, CoreState>((state) => state.core);
+  const { state } = useContext(context);
+
+  const { ecommerceInstance } = state.core;
 
   const [cartService, setCartService] = useState<CartService>();
 

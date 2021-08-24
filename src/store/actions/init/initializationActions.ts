@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { CheckoutService, createInstance, EcommerceInstance } from "@luminoso/ecommerce-sdk";
 import braintree, { Client } from "braintree-web";
 
@@ -6,6 +5,7 @@ import { Action } from "../../../models/store/Action";
 import { SET_ECOMMERCE_CLIENT } from "../../types/core";
 import { createAction } from "../../../utils/redux";
 import { SET_BILLING_CLIENT } from "../../types";
+import { Dispatch } from "react";
 
 export const initializeActions = (sdkKey: string) => async (dispatch: Dispatch<Action>) => {
   try {
@@ -30,9 +30,17 @@ export const setupLuminosoEcommerceClientAction = (sdkKey: string) => async (dis
 
     const instance = createInstance({ sdkKey });
 
-    return dispatch(setupLuminosoEcommerceClientSuccess(instance));
+    const emit = setupLuminosoEcommerceClientSuccess(instance);
+
+    dispatch(emit);
+
+    return emit;
   } catch (e) {
-    return dispatch(setupLuminosoEcommerceClientFailed(e));
+    const emit = setupLuminosoEcommerceClientFailed(e);
+
+    dispatch(emit);
+
+    return emit;
   }
 };
 

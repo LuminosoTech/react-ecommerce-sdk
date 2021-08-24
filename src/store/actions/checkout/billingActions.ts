@@ -1,4 +1,4 @@
-import { Dispatch } from "redux";
+import { Dispatch } from "react";
 import { CheckoutService, createInstance, EcommerceInstance } from "@luminoso/ecommerce-sdk";
 import braintree, { Client } from "braintree-web";
 

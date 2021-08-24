@@ -1,8 +1,25 @@
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
+import React from "react";
+import { createContext, Dispatch, PropsWithChildren, useReducer } from "react";
+import { Action } from "../models/store/Action";
+import rootReducer, { initialRootState, InitialRootState } from "./reducers";
 
-import rootReducer from "./reducers";
+interface ProviderState {
+  state: InitialRootState;
+  dispatch?: Dispatch<Action>;
+}
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+export const context = createContext<ProviderState>({ state: initialRootState });
 
-export { store };
+export const Consumer = context.Consumer;
+
+interface ContextProvicerProps {}
+
+export const ContextProvicer = (props: PropsWithChildren<ContextProvicerProps>) => {
+  const { children } = props;
+
+  const Provider = context.Provider;
+
+  const [state, dispatch] = useReducer(rootReducer, initialRootState);
+
+  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+};

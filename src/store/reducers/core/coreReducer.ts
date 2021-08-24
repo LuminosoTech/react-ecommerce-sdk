@@ -8,12 +8,12 @@ export interface CoreState {
   ecommerceInstance?: EcommerceInstance;
 }
 
-const initialState: CoreState = {
+export const coreInitialState: CoreState = {
   isFetchingEcommerceInstance: false,
   ecommerceInstance: undefined,
 };
 
-const coreReducer = (state = initialState, action: Action): CoreState => {
+const coreReducer = (state: CoreState, action: Action): CoreState => {
   switch (action.type) {
     case SET_ECOMMERCE_CLIENT.REQUEST:
       return update(state, {
