@@ -1,10 +1,10 @@
 import {
   CheckoutService as SdkCheckoutService,
   AccountBody,
-  ShippingAccount,
   CustomerAddress,
   ClientPaymentToken,
   ShippingRate,
+  CustomerSessionCheckout,
 } from "@luminoso/ecommerce-sdk";
 import { BillingClient, PaymentMethod } from "../../models/billing";
 
@@ -23,6 +23,10 @@ export class CheckoutService {
 
   public getAddressAutocomplete = (address: string) => {
     this.sdkCheckoutService.getAddressAutocomplete(address);
+  };
+
+  public getCustomerSessionCheckout = (): Promise<CustomerSessionCheckout> => {
+    return this.sdkCheckoutService.getCustomerSessionCheckout();
   };
 
   public getShippingRates = (): Promise<ShippingRate[]> => {

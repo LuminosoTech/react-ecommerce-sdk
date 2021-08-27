@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartService, CheckoutService as CheckoutService$1, AccountBody, ShippingRate, CustomerAddress, ClientPaymentToken, EcommerceInstance } from '@luminoso/ecommerce-sdk';
+import { CartService, CheckoutService as CheckoutService$1, AccountBody, CustomerSessionCheckout, ShippingRate, CustomerAddress, ClientPaymentToken, EcommerceInstance } from '@luminoso/ecommerce-sdk';
 
 interface InitializeProps {
 }
@@ -25,6 +25,7 @@ declare class CheckoutService {
     constructor(sdkCheckoutService: CheckoutService$1, billingClient?: BillingClient);
     postAccountInfo: (body: Partial<AccountBody>) => void;
     getAddressAutocomplete: (address: string) => void;
+    getCustomerSessionCheckout: () => Promise<CustomerSessionCheckout>;
     getShippingRates: () => Promise<ShippingRate[]>;
     postSelectedShippingRate: (rateId: string) => Promise<void>;
     postCustomerAddress: (body: Partial<CustomerAddress>) => void;
