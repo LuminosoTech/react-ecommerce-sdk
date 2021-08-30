@@ -22,7 +22,7 @@ export class CheckoutService {
   };
 
   public getAddressAutocomplete = (address: string) => {
-    this.sdkCheckoutService.getAddressAutocomplete(address);
+    return this.sdkCheckoutService.getAddressAutocomplete(address);
   };
 
   public getCustomerSessionCheckout = (): Promise<CustomerSessionCheckout> => {
