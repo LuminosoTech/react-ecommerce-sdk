@@ -32,6 +32,7 @@ declare class CheckoutService {
     postCustomerAddress: (body: Partial<CustomerAddress>) => void;
     getClientPaymentToken: () => Promise<ClientPaymentToken>;
     postPaymentMethod: (data: PaymentMethod) => Promise<string>;
+    placeOrder: () => Promise<void>;
 }
 
 declare const useCheckout: () => CheckoutService | undefined;

@@ -56,4 +56,8 @@ export class CheckoutService {
 
     return "billintClientNotInitialized";
   };
+
+  public placeOrder = () => {
+    return this.sdkCheckoutService.postPlaceOrder();
+  };
 }
