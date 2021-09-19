@@ -1,10 +1,12 @@
 import React from 'react';
 import * as _luminoso_ecommerce_sdk from '@luminoso/ecommerce-sdk';
-import { CartService, CheckoutService as CheckoutService$1, AccountBody, CustomerSessionCheckout, ShippingRate, CustomerAddress, ClientPaymentToken, EcommerceInstance } from '@luminoso/ecommerce-sdk';
+import { AnalyticsService, CartService, CheckoutService as CheckoutService$1, AccountBody, CustomerSessionCheckout, ShippingRate, CustomerAddress, ClientPaymentToken, EcommerceInstance } from '@luminoso/ecommerce-sdk';
 
 interface InitializeProps {
 }
 declare const initialize: (sdkKey: string) => (props: React.PropsWithChildren<InitializeProps>) => JSX.Element;
+
+declare const useAnalytics: () => AnalyticsService | undefined;
 
 declare const useCart: () => CartService | undefined;
 
@@ -43,4 +45,4 @@ declare const useUser: () => void;
 
 declare const useLuminoso: () => EcommerceInstance | undefined;
 
-export { BillingClient, PaymentMethod, initialize, useCart, useCheckout, useEcommerceStore, useLuminoso, useUser };
+export { BillingClient, PaymentMethod, initialize, useAnalytics, useCart, useCheckout, useEcommerceStore, useLuminoso, useUser };

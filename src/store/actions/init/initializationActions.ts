@@ -1,4 +1,4 @@
-import { CheckoutService, createInstance, EcommerceInstance } from "@luminoso/ecommerce-sdk";
+import { CheckoutService, createInstance, EcommerceInstance, UserService } from "@luminoso/ecommerce-sdk";
 import braintree, { Client } from "braintree-web";
 
 import { Action } from "../../../models/store/Action";
@@ -12,6 +12,11 @@ export const initializeActions = (sdkKey: string) => async (dispatch: Dispatch<A
     const { type, payload } = await setupLuminosoEcommerceClientAction(sdkKey)(dispatch);
     if (type === SET_ECOMMERCE_CLIENT.SUCCESS) {
       const ecommerceInstance = payload as EcommerceInstance;
+
+      const userAgent = window.navigator.userAgent;
+      const language = navigator.language;
+
+      await ecommerceInstance.userService().initializeForBrowser(userAgent, language);
 
       setupBillingClientActions(ecommerceInstance.checkoutService())(dispatch);
     }

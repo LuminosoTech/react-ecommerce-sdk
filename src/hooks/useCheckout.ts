@@ -28,7 +28,7 @@ export const useCheckout = () => {
 
       setCheckoutServiceState(checkoutService);
     }
-  }, [ecommerceInstance]);
+  }, [ecommerceInstance, billingClient]);
 
   return checkoutServiceState;
 };
