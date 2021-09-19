@@ -1,6 +1,6 @@
 {
   "name": "@luminoso/react-ecommerce-sdk",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "React sdk to easily integrate with Luminoso's ecommerce api",
   "license": "Apache-2.0",
   "module": "dist/react-ecommerce-sdk.esya.js",
@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/LuminosoTech/react-ecommerce-sdk#readme",
   "dependencies": {
-    "@luminoso/ecommerce-sdk": "0.0.8",
+    "@luminoso/ecommerce-sdk": "0.0.9",
     "@types/braintree-web": "3.75.6",
     "braintree-web": "3.80.0"
   },
