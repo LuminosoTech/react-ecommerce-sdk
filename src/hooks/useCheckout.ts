@@ -15,16 +15,17 @@ export const useCheckout = () => {
   const [checkoutServiceState, setCheckoutServiceState] = useState<CheckoutService>();
 
   useEffect(() => {
+    const paymentService = ecommerceInstance?.paymentService();
     const sdkCheckoutService = ecommerceInstance?.checkoutService();
 
-    if (sdkCheckoutService) {
+    if (paymentService && sdkCheckoutService) {
       let braintreeBillingClient: BillingClient | undefined = undefined;
 
       if (billingClient) {
         braintreeBillingClient = new BraintreeBillingClient(billingClient);
       }
 
-      const checkoutService = new CheckoutService(sdkCheckoutService, braintreeBillingClient);
+      const checkoutService = new CheckoutService(paymentService, sdkCheckoutService, braintreeBillingClient);
 
       setCheckoutServiceState(checkoutService);
     }
