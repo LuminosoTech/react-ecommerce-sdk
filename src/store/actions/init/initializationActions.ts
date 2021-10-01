@@ -1,4 +1,11 @@
-import { CheckoutService, createInstance, EcommerceInstance, UserService } from "@luminoso/ecommerce-sdk";
+import {
+  CheckoutService,
+  createInstance,
+  EcommerceInstance,
+  PaymentService,
+  StoreService,
+  UserService,
+} from "@luminoso/ecommerce-sdk";
 import braintree, { Client } from "braintree-web";
 
 import { Action } from "../../../models/store/Action";
@@ -18,7 +25,10 @@ export const initializeActions = (sdkKey: string) => async (dispatch: Dispatch<A
 
       await ecommerceInstance.userService().initializeForBrowser(userAgent, language);
 
-      setupBillingClientActions(ecommerceInstance.checkoutService())(dispatch);
+      const storeService = ecommerceInstance.storeService();
+      const paymentService = ecommerceInstance.paymentService();
+
+      setupBillingClientActions(storeService, paymentService)(dispatch);
     }
   } catch (e) {
     console.error(e);
@@ -52,18 +62,23 @@ export const setupLuminosoEcommerceClientAction = (sdkKey: string) => async (dis
 const setupBillingClientSuccess = (billingClient: Client) => createAction(SET_BILLING_CLIENT.SUCCESS, billingClient);
 const setupBillingClientFailed = (e: Error) => createAction(SET_BILLING_CLIENT.FAILURE, e);
 
-export const setupBillingClientActions = (checkout: CheckoutService) => async (dispatch: Dispatch<Action>) => {
-  try {
-    dispatch({ type: SET_BILLING_CLIENT.REQUEST });
+export const setupBillingClientActions =
+  (storeService: StoreService, paymentService: PaymentService) => async (dispatch: Dispatch<Action>) => {
+    try {
+      dispatch({ type: SET_BILLING_CLIENT.REQUEST });
 
-    const { token } = await checkout.getClientPaymentToken();
+      const storePaymentConfig = await storeService.getStorePaymentConfig();
 
-    const client = await braintree.client.create({
-      authorization: token,
-    });
+      if (storePaymentConfig.isBraintreeLinked) {
+        const { token } = await paymentService.getBraintreePaymentToken();
 
-    dispatch(setupBillingClientSuccess(client));
-  } catch (e) {
-    dispatch(setupBillingClientFailed(e));
-  }
-};
+        const client = await braintree.client.create({
+          authorization: token,
+        });
+
+        dispatch(setupBillingClientSuccess(client));
+      }
+    } catch (e) {
+      dispatch(setupBillingClientFailed(e as Error));
+    }
+  };

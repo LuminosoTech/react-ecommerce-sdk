@@ -1,6 +1,5 @@
 import { Dispatch } from "react";
 import { CheckoutService, createInstance, EcommerceInstance } from "@luminoso/ecommerce-sdk";
-import braintree, { Client } from "braintree-web";
 
 import { Action } from "../../../models/store/Action";
 import { SET_ECOMMERCE_CLIENT } from "../../types/core";
