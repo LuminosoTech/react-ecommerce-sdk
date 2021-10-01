@@ -5,15 +5,18 @@ import {
   ClientPaymentToken,
   ShippingRate,
   CustomerSessionCheckout,
+  PaymentService,
 } from "@luminoso/ecommerce-sdk";
 import { BillingClient, PaymentMethod } from "../../models/billing";
 
 export class CheckoutService {
   private billingClient?: BillingClient;
   private sdkCheckoutService: SdkCheckoutService;
+  private paymentService: PaymentService;
 
-  constructor(sdkCheckoutService: SdkCheckoutService, billingClient?: BillingClient) {
+  constructor(paymentService: PaymentService, sdkCheckoutService: SdkCheckoutService, billingClient?: BillingClient) {
     this.billingClient = billingClient;
+    this.paymentService = paymentService;
     this.sdkCheckoutService = sdkCheckoutService;
   }
 
@@ -41,15 +44,11 @@ export class CheckoutService {
     this.sdkCheckoutService.postCustomerAddress(body);
   };
 
-  public getClientPaymentToken = (): Promise<ClientPaymentToken> => {
-    return this.sdkCheckoutService.getClientPaymentToken();
-  };
-
   public postPaymentMethod = async (data: PaymentMethod): Promise<string> => {
     if (this.billingClient) {
       const nonce = await this.billingClient?.addPaymentMethod(data);
 
-      await this.sdkCheckoutService.postPaymentMethod(nonce);
+      await this.paymentService.postPaymentMethod(nonce);
 
       return "done";
     }
