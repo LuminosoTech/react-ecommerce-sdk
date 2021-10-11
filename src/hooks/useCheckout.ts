@@ -15,8 +15,8 @@ export const useCheckout = () => {
   const [checkoutServiceState, setCheckoutServiceState] = useState<CheckoutService>();
 
   useEffect(() => {
-    const paymentService = ecommerceInstance?.paymentService();
-    const sdkCheckoutService = ecommerceInstance?.checkoutService();
+    const paymentService = ecommerceInstance?.payment;
+    const sdkCheckoutService = ecommerceInstance?.checkout;
 
     if (paymentService && sdkCheckoutService) {
       let braintreeBillingClient: BillingClient | undefined = undefined;

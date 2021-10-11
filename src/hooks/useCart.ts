@@ -11,7 +11,7 @@ export const useCart = () => {
   const [cartService, setCartService] = useState<CartService>();
 
   useEffect(() => {
-    const sdkCartService = ecommerceInstance?.cartService();
+    const sdkCartService = ecommerceInstance?.cart;
 
     if (sdkCartService) {
       setCartService(sdkCartService);

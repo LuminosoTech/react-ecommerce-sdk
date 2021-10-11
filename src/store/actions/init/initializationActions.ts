@@ -23,10 +23,10 @@ export const initializeActions = (sdkKey: string) => async (dispatch: Dispatch<A
       const userAgent = window.navigator.userAgent;
       const language = navigator.language;
 
-      await ecommerceInstance.userService().initializeForBrowser(userAgent, language);
+      await ecommerceInstance.user.initializeForBrowser(userAgent, language);
 
-      const storeService = ecommerceInstance.storeService();
-      const paymentService = ecommerceInstance.paymentService();
+      const storeService = ecommerceInstance.store;
+      const paymentService = ecommerceInstance.payment;
 
       setupBillingClientActions(storeService, paymentService)(dispatch);
     }
@@ -70,13 +70,17 @@ export const setupBillingClientActions =
       const storePaymentConfig = await storeService.getStorePaymentConfig();
 
       if (storePaymentConfig.isBraintreeLinked) {
-        const { token } = await paymentService.getBraintreePaymentToken();
+        const { token } = await paymentService.getBraintreeClientToken();
 
         const client = await braintree.client.create({
           authorization: token,
         });
 
         dispatch(setupBillingClientSuccess(client));
+      }
+
+      if (storePaymentConfig.isStripeConnectLinked) {
+        const { publisherKey } = await paymentService.getStripeClientToken();
       }
     } catch (e) {
       dispatch(setupBillingClientFailed(e as Error));

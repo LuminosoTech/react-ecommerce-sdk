@@ -1,6 +1,6 @@
 import React from 'react';
 import * as _luminoso_ecommerce_sdk from '@luminoso/ecommerce-sdk';
-import { AnalyticsService, CartService, CheckoutService as CheckoutService$1, AccountBody, CustomerSessionCheckout, ShippingRate, CustomerAddress, ClientPaymentToken, EcommerceInstance } from '@luminoso/ecommerce-sdk';
+import { AnalyticsService, CartService, PaymentService, CheckoutService as CheckoutService$1, AccountBody, CustomerSessionCheckout, ShippingRate, CustomerAddress, OrderService } from '@luminoso/ecommerce-sdk';
 
 interface InitializeProps {
 }
@@ -25,14 +25,14 @@ interface BillingClient {
 declare class CheckoutService {
     private billingClient?;
     private sdkCheckoutService;
-    constructor(sdkCheckoutService: CheckoutService$1, billingClient?: BillingClient);
+    private paymentService;
+    constructor(paymentService: PaymentService, sdkCheckoutService: CheckoutService$1, billingClient?: BillingClient);
     postAccountInfo: (body: Partial<AccountBody>) => void;
     getAddressAutocomplete: (address: string) => Promise<_luminoso_ecommerce_sdk.GeocodingAddress>;
     getCustomerSessionCheckout: () => Promise<CustomerSessionCheckout>;
     getShippingRates: () => Promise<ShippingRate[]>;
     postSelectedShippingRate: (rateId: string) => Promise<void>;
     postCustomerAddress: (body: Partial<CustomerAddress>) => void;
-    getClientPaymentToken: () => Promise<ClientPaymentToken>;
     postPaymentMethod: (data: PaymentMethod) => Promise<string>;
     placeOrder: () => Promise<void>;
 }
@@ -43,6 +43,8 @@ declare const useEcommerceStore: () => undefined;
 
 declare const useUser: () => void;
 
-declare const useLuminoso: () => EcommerceInstance | undefined;
+declare const useLuminoso: () => _luminoso_ecommerce_sdk.EcommerceInstance | undefined;
 
-export { BillingClient, PaymentMethod, initialize, useAnalytics, useCart, useCheckout, useEcommerceStore, useLuminoso, useUser };
+declare const useOrder: () => OrderService | undefined;
+
+export { BillingClient, PaymentMethod, initialize, useAnalytics, useCart, useCheckout, useEcommerceStore, useLuminoso, useOrder, useUser };
