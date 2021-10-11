@@ -12,7 +12,7 @@ export const useAnalytics = () => {
   const [analyticsService, setAnalyticsService] = useState<AnalyticsService>();
 
   useEffect(() => {
-    const analyticsService = ecommerceInstance?.analyticsService();
+    const analyticsService = ecommerceInstance?.analytics;
 
     if (analyticsService) {
       setAnalyticsService(analyticsService);
