@@ -1,6 +1,6 @@
 {
   "name": "@luminoso/react-ecommerce-sdk",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "React sdk to easily integrate with Luminoso's ecommerce api",
   "license": "Apache-2.0",
   "module": "dist/react-ecommerce-sdk.esya.js",
