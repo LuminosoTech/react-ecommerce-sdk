@@ -2,7 +2,6 @@ import {
   CheckoutService as SdkCheckoutService,
   AccountBody,
   CustomerAddress,
-  ClientPaymentToken,
   ShippingRate,
   CustomerSessionCheckout,
   PaymentService,
