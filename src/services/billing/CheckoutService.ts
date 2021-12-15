@@ -5,6 +5,7 @@ import {
   ShippingRate,
   CustomerSessionCheckout,
   PaymentService,
+  ShippingSupportedCountry,
 } from "@luminoso/ecommerce-sdk";
 import { BillingClient, PaymentMethod } from "../../models/billing";
 
@@ -29,6 +30,10 @@ export class CheckoutService {
 
   public getCustomerSessionCheckout = (): Promise<CustomerSessionCheckout> => {
     return this.sdkCheckoutService.getCustomerSessionCheckout();
+  };
+
+  public getSupportedShippingLocations = (): Promise<ShippingSupportedCountry[]> => {
+    return this.sdkCheckoutService.getSupportedShippingLocations();
   };
 
   public getShippingRates = (): Promise<ShippingRate[]> => {
