@@ -28,7 +28,7 @@ export const initializeActions = (sdkKey: string) => async (dispatch: Dispatch<A
       const storeService = ecommerceInstance.store;
       const paymentService = ecommerceInstance.payment;
 
-      setupBillingClientActions(storeService, paymentService)(dispatch);
+      await setupBillingClientActions(storeService, paymentService)(dispatch);
     }
   } catch (e) {
     console.error(e);

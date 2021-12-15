@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useContext, useEffect, useMemo } from "react";
+import React, { PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 import { context, ContextProvicer } from "../store";
 import { initializeActions } from "../store/actions/init/initializationActions";
 
@@ -13,13 +13,19 @@ const InitContainer = (props: PropsWithChildren<LuminosoContainerProps>) => {
 
   const { dispatch } = useContext(context);
 
+  const [initialized, setInitialized] = useState(false);
+
   useEffect(() => {
     if (dispatch) {
-      initializeActions(sdkKey)(dispatch);
+      const setup = async () => {
+        await initializeActions(sdkKey)(dispatch);
+        setInitialized(true);
+      };
+      setup();
     }
   }, [dispatch]);
 
-  return <>{props.children}</>;
+  return <>{initialized && props.children}</>;
 };
 
 export const initialize = (sdkKey: string) => (props: React.PropsWithChildren<InitializeProps>) => {
